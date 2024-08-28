@@ -25,8 +25,13 @@ class Codemaker:
         missed = len(self.code) - correct - close
         print("●" * correct + "◌" * checked + "·" * missed)
 
+        if correct == len(self.code):
+            return True
+        else:
+            return False
+
 
     def list_colors(self):
-        print("Available colors:")
+        print("Available colors: ")
         for color in self.colors:
             print(color, end="  ")
