@@ -1,5 +1,18 @@
 from codemaker import *
 
+def guess_list(code, guess):
+    guesslist = []
+    while True:
+            for peg in guess:
+                if peg.isalpha():
+                    guesslist.append(peg.upper())
+            
+            if len(guesslist) != len(code.code):
+                guess = input("Invalid guess. Try again: ")
+                guesslist = []
+            else:
+                return guesslist
+
 def classic(total, given):
     code = ClassicGame(total, given)
     chances = code.guesses
@@ -16,24 +29,24 @@ def classic(total, given):
         code.list_colors()
 
         guess = input("Make your guess here: ")
-        guesslist = []
+        guess = guess_list(code, guess)
 
-        while True:
-            for peg in guess:
-                if peg.isalpha():
-                    guesslist.append(peg.upper())
-            
-            if len(guesslist) != len(code.code):
-                guess = input("Invalid guess. Try again: ")
-                guesslist = []
-            else:
-                break
-
-        if code.check(guesslist):
+        if code.check(guess):
             code.display_table()
             print("You win!")
             break
         guesses += 1
 
 def puzzle(total, given):
-    pass
+    code = PuzzleGame(total, given)
+
+    while True:
+        code.display_clues()
+        code.list_colors()
+
+        guess = input("Make your guess here: ")
+        guess = guess_list(code, guess)
+
+        if code.compare(guess):
+            print("You win!")
+            break

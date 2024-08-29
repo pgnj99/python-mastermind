@@ -18,23 +18,23 @@ class Codemaker:
             code.append(random.choice(self.colors))
         return code
 
-    def make_marks(self, guess):
+    def make_marks(self, guess, code):
         correct = 0
         close = 0
         checked = []
 
-        for i in range(len(self.code)):
-            if guess[i] == self.code[i]:
+        for i in range(len(code)):
+            if guess[i] == code[i]:
                 correct += 1
                 checked.append(i)
             else:
-                for j in range(len(self.code)):
-                    if guess[i] == self.code[j] and guess[j] != self.code[j] and j not in checked:
+                for j in range(len(code)):
+                    if guess[i] == code[j] and guess[j] != code[j] and j not in checked:
                         close += 1
                         checked.append(j)
                         break
         
-        missed = len(self.code) - correct - close
+        missed = len(code) - correct - close
         
         return self.mark_correct * correct + self.mark_close * close + self.mark_missed * missed
 
@@ -57,7 +57,7 @@ class ClassicGame(Codemaker):
     def check(self, guess):
         self.update_table(guess)
 
-        mark = self.make_marks(guess)
+        mark = self.make_marks(guess, self.code)
         self.marks.append(mark)
 
         if guess == self.code:
@@ -97,10 +97,21 @@ class PuzzleGame(Codemaker):
                 self.clues.append(clue)
         
         for clue in self.clues:
-            self.marks.append(self.make_marks(clue))
+            self.marks.append(self.make_marks(clue, self.code))
 
     def display_clues(self):
         for i in range(len(self.clues)):
             for peg in self.clues[i]:
                 print(peg, end="  ")
             print(self.marks[i])
+
+    def compare(self, guess):
+        for i in range(len(self.clues)):
+            guessmark = self.make_marks(guess, self.clues[i])
+            if guessmark == self.marks[i]:
+                print("Clue " + str(i + 1) + " passed!")
+            else:
+                print("Clue " + str(i + 1) + " failed!")
+                print("Please try again.")
+                return False
+        return True

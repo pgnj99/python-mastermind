@@ -33,11 +33,11 @@ while True:
         choice = input()
         while True:
             if choice.isnumeric():
-                if int(choice) == 3:
+                if int(choice) == 1:
                     puzzle(3, 3)
-                elif int(choice) == 4:
+                elif int(choice) == 2:
                     puzzle(4, 4)
-                elif int(choice) == 5:
+                elif int(choice) == 3:
                     puzzle(5, 5)
                 else:
                     choice = input('Invalid choice, try again: ')
