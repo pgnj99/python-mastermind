@@ -24,9 +24,7 @@ while True:
                 break
             else:
                 print('Invalid count.')
-        classic(total, given)
-
-        classic(1)
+        classic(int(total), int(given))
     #elif choice == "2":
         #play(2)
     elif choice == "3":

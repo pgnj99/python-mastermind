@@ -27,13 +27,17 @@ class Codemaker:
             if guess[i] == self.code[i]:
                 correct += 1
                 checked.append(i)
-            elif guess[i] in self.code and i not in checked:
-                close += 1
+            else:
+                for j in range(len(self.code)):
+                    if guess[i] == self.code[j] and guess[j] != self.code[j] and j not in checked:
+                        close += 1
+                        checked.append(j)
+                        break
         
         self.update_table(guess)
 
         missed = len(self.code) - correct - close
-        self.marks.append("●" * correct + "◌" * checked + "·" * missed)
+        self.marks.append("●" * correct + "◌" * close + "·" * missed)
 
         if correct == len(self.code):
             return True
@@ -41,23 +45,27 @@ class Codemaker:
             return False
 
     def update_table(self, guess):
-        for row in self.table:
-            if "·" in row:
-                row = guess
+        for i in range(self.guesses):
+            if "·" in self.table[i]:
+                self.table[i] = guess
                 break
     
     def display_table(self):
         for i in range(self.guesses - 1, -1, -1):
             for peg in self.table[i]:
                 print(peg, end="  ")
-                if "·" not in self.table[i]:
-                    print(self.marks[i])
+            if "·" not in self.table[i]:
+                print(self.marks[i])
+            else:
+                print()
     
     def display_code(self):
         for peg in self.code:
             print(peg, end="  ")
+        print()
 
     def list_colors(self):
         print("Available colors: ")
         for color in self.colors:
             print(color, end="  ")
+        print()

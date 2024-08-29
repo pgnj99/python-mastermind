@@ -28,4 +28,8 @@ def classic(total, given):
             else:
                 break
 
-        code.check(guesslist)
+        if code.check(guesslist):
+            code.display_table()
+            print("You win!")
+            break
+        guesses += 1
