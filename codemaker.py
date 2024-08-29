@@ -6,14 +6,28 @@ class Codemaker:
 
     def __init__(self, total, given):
         self.colors = Codemaker.colors_full[:given]
-        self.code = []
+        self.code = self.make_code(total)
+
+    def make_code(self, total):
+        code = []
+        for i in range(total):
+            code.append(random.choice(self.colors))
+        return code
+
+    def list_colors(self):
+        print("Available colors: ")
+        for color in self.colors:
+            print(color, end="  ")
+        print()
+
+
+class ClassicGame(Codemaker):
+    def __init__(self, total, given):
+        super().__init__(total, given)
         self.table = []
         self.marks = []
 
         self.guesses = 10
-
-        for i in range(total):
-            self.code.append(random.choice(self.colors))
 
         for i in range(self.guesses):
             self.table.append(["·"] * total)
@@ -64,8 +78,13 @@ class Codemaker:
             print(peg, end="  ")
         print()
 
-    def list_colors(self):
-        print("Available colors: ")
-        for color in self.colors:
-            print(color, end="  ")
-        print()
+
+class PuzzleGame(Codemaker):
+    def __init__(self, total, given):
+        super().__init__(total, given)
+        self.clues = []
+
+        while len(self.clues) < 4:
+            clue = self.make_code(total)
+            if clue != self.code and clue not in self.clues:
+                self.clues.append(clue)

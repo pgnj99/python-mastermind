@@ -25,8 +25,22 @@ while True:
             else:
                 print('Invalid count.')
         classic(int(total), int(given))
-    #elif choice == "2":
-        #play(2)
+    elif choice == "2":
+        print("Select a difficulty:")
+        print("1. Easy (3 pegs)")
+        print("2. Medium (4 pegs)")
+        print("3. Hard (5 pegs)")
+        choice = input()
+        while True:
+            if choice.isnumeric():
+                if int(choice) == 3:
+                    puzzle(3, 3)
+                elif int(choice) == 4:
+                    puzzle(4, 4)
+                elif int(choice) == 5:
+                    puzzle(5, 5)
+                else:
+                    choice = input('Invalid choice, try again: ')
     elif choice == "3":
         options()
     elif choice == "0":

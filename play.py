@@ -1,7 +1,7 @@
 from codemaker import *
 
 def classic(total, given):
-    code = Codemaker(total, given)
+    code = ClassicGame(total, given)
     chances = code.guesses
     guesses = 0
 
@@ -25,6 +25,7 @@ def classic(total, given):
             
             if len(guesslist) != len(code.code):
                 guess = input("Invalid guess. Try again: ")
+                guesslist = []
             else:
                 break
 
@@ -33,3 +34,6 @@ def classic(total, given):
             print("You win!")
             break
         guesses += 1
+
+def puzzle(total, given):
+    pass
