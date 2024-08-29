@@ -37,8 +37,8 @@ def classic(total, given):
             break
         guesses += 1
 
-def puzzle(total, given):
-    code = PuzzleGame(total, given)
+def puzzle(total, given, count):
+    code = PuzzleGame(total, given, count)
 
     while True:
         code.display_clues()

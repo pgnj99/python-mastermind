@@ -6,6 +6,8 @@ print('1: Classic')
 print('2: Puzzle')
 print('3: Options')
 
+settings = [0, ["●", "◌", "·"], True]
+
 check = False
 
 # This loop will run for as long as the player wants to continue playing
@@ -34,15 +36,15 @@ while True:
         while True:
             if choice.isnumeric():
                 if int(choice) == 1:
-                    puzzle(3, 3)
+                    puzzle(3, 3, 3)
                 elif int(choice) == 2:
-                    puzzle(4, 4)
+                    puzzle(4, 4, 4)
                 elif int(choice) == 3:
-                    puzzle(5, 5)
+                    puzzle(5, 5, 5)
                 else:
                     choice = input('Invalid choice, try again: ')
     elif choice == "3":
-        options()
+        settings = options(settings)
     elif choice == "0":
         print("Thank you for playing!")
         break

@@ -87,11 +87,11 @@ class ClassicGame(Codemaker):
 
 
 class PuzzleGame(Codemaker):
-    def __init__(self, total, given):
+    def __init__(self, total, given, count):
         super().__init__(total, given)
         self.clues = []
 
-        while len(self.clues) < 4:
+        while len(self.clues) < count:
             clue = self.make_code(total)
             if clue != self.code and clue not in self.clues:
                 self.clues.append(clue)
