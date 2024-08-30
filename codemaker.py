@@ -5,7 +5,7 @@ class Codemaker:
     colors_full = {'Blue': 34, 'Red': 31, 'Green': 32, 'Yellow': 93, 'Pink': 95, 'Cyan': 36, 'White': 47}
 
     def __init__(self, total, given, settings):
-        self.colors = [color for color in Codemaker.colors_full[:given]]
+        self.colors = dict(list(self.colors_full.items())[:given])
         self.code = self.make_code(total)
         self.marks = []
 
@@ -17,16 +17,20 @@ class Codemaker:
     def make_code(self, total):
         code = []
         for i in range(total):
-            code.append(random.choice(self.colors))
+            code.append(random.choice(list(self.colors.keys())))
         return code
 
-    def get_code(self):
-        return [color[0] for color in self.code]
+    def get_code(self, code = 0):
+        if code == 0:
+            code = self.code
+        return [color[0] for color in code]
 
     def make_marks(self, guess, code):
         correct = 0
         close = 0
         checked = []
+        guess = self.get_code(guess)
+        code = self.get_code(code)
 
         for i in range(len(code)):
             if guess[i] == code[i]:
@@ -52,7 +56,8 @@ class Codemaker:
     def peg_color(self, text, settings = 0):
         if settings == 0:
             settings = self.settings
-            text = text[0]
+        
+        text = text[0]
 
         if settings[0] == 0:
             return text
@@ -78,7 +83,7 @@ class ClassicGame(Codemaker):
         mark = self.make_marks(guess, self.code)
         self.marks.append(mark)
 
-        if guess == self.code:
+        if guess == self.get_code():
             return True
         else:
             return False

@@ -17,12 +17,7 @@ def options(settings):
             print("Current setting: " + colors[settings[0]])
             print("Preview:")
             for color in color_list:
-                if settings[0] == 0:
-                    print(color[0] + ": " + color)
-                elif settings[0] == 1:
-                    print('\033[' + str(color_list[color]) + 'm' + color[0] + '\033[0m: ' + color)
-                elif settings[0] == 2:
-                    print('\033[30m\033[' + str(color_list[color] + 10) + 'm' + color[0] + '\033[0m: ' + color)
+                print(Codemaker.peg_color(color, settings) + ': ' + color)
             print('\nNote that colors may not display properly depending on your system and settings.')
             for i in range(len(colors)):
                 print(str(i + 1) + ': ' + colors[i])
@@ -80,18 +75,16 @@ def options(settings):
         else:
             print("Invalid choice.")
 
-def make_file(settings = [0, ["●◌·"], True]):
-    file = open("options.txt", "wt")
-    file.writelines([str(settings[0]), settings[1], str(int(settings[2]))])
+def make_file(settings = [0, "●◌·", True]):
+    file = open("options.txt", "wt", encoding="utf-8")
+    file.write(str(settings[0]) + "\n" + settings[1] + "\n" + str(int(settings[2])))
     file.close()
 
 def get_settings():
     try:
         settings = []
-        file = open("options.txt", "rt")
-        for i in range(3):
-            settings.append(file.readlines())
-        file.close()
+        for line in open("options.txt", "rt", encoding="utf-8"):
+            settings.append(line.replace('\n', ''))
 
         settings[0] = int(settings[0])
         settings[2] = bool(int(settings[2]))
