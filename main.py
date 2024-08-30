@@ -1,3 +1,5 @@
+import os
+from sys import exit
 from play import *
 from options import *
 
@@ -8,7 +10,13 @@ print('3: Options')
 
 settings = [0, ["●", "◌", "·"], True]
 
-check = False
+if not os.path.exists("options.txt"):
+    make_file()
+
+settings = get_settings()
+if settings == False:
+    print("options.txt file is unreadable. Please delete file to continue.")
+    exit(1)
 
 # This loop will run for as long as the player wants to continue playing
 while True:

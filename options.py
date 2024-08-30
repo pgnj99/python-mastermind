@@ -3,6 +3,7 @@ from codemaker import *
 def options(settings):
     colors = ['Colorless', 'Colored Text', 'Colored Backgrounds']
     repeat = ['ON', 'OFF']
+    settings_old = settings
 
     while True:
         print('1: Peg colors')
@@ -26,6 +27,33 @@ def options(settings):
             else:
                 print("Invalid choice.")
         elif choice == "0":
+            if settings != settings_old:
+                choice = input("Enter Y to save your settings: ")
+                if choice == "Y":
+                    make_file(settings)
+                    print("Changes saved successfully.")
+                else:
+                    settings = settings_old
+                    print("Changes canceled.")
             break
         else:
             print("Invalid choice.")
+
+def make_file(settings = [0, ["●◌·"], True]):
+    file = open("options.txt", "wt")
+    file.writelines([str(settings[0]), settings[1], str(int(settings[2]))])
+    file.close()
+
+def get_settings():
+    try:
+        settings = []
+        file = open("options.txt", "rt")
+        for i in range(3):
+            settings.append(file.readlines())
+        file.close()
+
+        settings[0] = int(settings[0])
+        settings[2] = bool(int(settings[2]))
+        return settings
+    except:
+        return False
