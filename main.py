@@ -30,7 +30,9 @@ while True:
                 print('Invalid count.')
         while True:
             given = input('How many peg colors would you like to be available? Enter a number between 3 and 7. ')
-            if given.isnumeric() and 3 <= int(given) <= 7:
+            if not settings[2] and given < total:
+                print('Repeat colors is turned off, and you cannot have fewer peg colors than pegs (' + total + ').')
+            elif given.isnumeric() and 3 <= int(given) <= 7:
                 break
             else:
                 print('Invalid count.')

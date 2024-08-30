@@ -6,18 +6,23 @@ class Codemaker:
 
     def __init__(self, total, given, settings):
         self.colors = dict(list(self.colors_full.items())[:given])
-        self.code = self.make_code(total)
         self.marks = []
 
-        self.settings = settings
-        self.mark_correct = self.settings[1][0]
-        self.mark_close = self.settings[1][1]
-        self.mark_missed = self.settings[1][2]
+        self.color_mode = settings[0]
+        self.mark_correct = settings[1][0]
+        self.mark_close = settings[1][1]
+        self.mark_missed = settings[1][2]
+        self.repeat = settings[2]
+
+        self.code = self.make_code(total)
 
     def make_code(self, total):
         code = []
-        for i in range(total):
-            code.append(random.choice(list(self.colors.keys())))
+        if self.repeat:
+            for i in range(total):
+                code.append(random.choice(list(self.colors.keys())))
+        else:
+            code = random.sample(list(self.colors.keys()), total)
         return code
 
     def get_code(self, code = 0):
@@ -53,20 +58,20 @@ class Codemaker:
             print(self.peg_color(color), end="  ")
         print()
 
-    def peg_color(self, text, settings = None):
-        if settings == None:
-            settings = self.settings
+    def peg_color(self, text, mode = None):
+        if mode == None:
+            mode = self.color_mode
 
         if len(text) == 1:
             for color in self.colors_full:
                 if text == color[0]:
                     text = color
 
-        if settings[0] == 0:
+        if mode == 0:
             return text[0]
-        elif settings[0] == 1:
+        elif mode == 1:
             return '\033[' + str(self.colors_full[text]) + 'm' + text[0] + '\033[0m'
-        elif settings[0] == 2:
+        elif mode == 2:
             return '\033[30m\033[' + str(self.colors_full[text] + 10) + 'm' + text[0] + '\033[0m'
 
 

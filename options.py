@@ -3,7 +3,7 @@ from codemaker import *
 def options(settings):
     colors = ['Colorless', 'Colored Text', 'Colored Backgrounds']
     color_list = Codemaker.colors_full
-    repeat = ['ON', 'OFF']
+    repeat = ['OFF', 'ON']
     settings_old = settings.copy()
 
     while True:
@@ -17,7 +17,7 @@ def options(settings):
             print("Current setting: " + colors[settings[0]])
             print("Preview:")
             for color in color_list:
-                print(Codemaker.peg_color(Codemaker, color, settings) + ': ' + color)
+                print(Codemaker.peg_color(Codemaker, color, settings[0]) + ': ' + color)
             print('\nNote that colors may not display properly depending on your system and settings.')
             for i in range(len(colors)):
                 print(str(i + 1) + ': ' + colors[i])
