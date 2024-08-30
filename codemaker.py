@@ -20,6 +20,9 @@ class Codemaker:
             code.append(random.choice(self.colors))
         return code
 
+    def get_code(self):
+        return [color[0] for color in self.code]
+
     def make_marks(self, guess, code):
         correct = 0
         close = 0

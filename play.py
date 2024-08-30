@@ -7,14 +7,14 @@ def guess_list(code, guess):
                 if peg.isalpha():
                     guesslist.append(peg.upper())
             
-            if len(guesslist) != len(code.code):
+            if len(guesslist) != len(code.get_code()):
                 guess = input("Invalid guess. Try again: ")
                 guesslist = []
             else:
                 return guesslist
 
-def classic(total, given):
-    code = ClassicGame(total, given)
+def classic(total, given, settings):
+    code = ClassicGame(total, given, settings)
     chances = code.guesses
     guesses = 0
 
@@ -37,8 +37,8 @@ def classic(total, given):
             break
         guesses += 1
 
-def puzzle(total, given, count):
-    code = PuzzleGame(total, given, count)
+def puzzle(total, given, count, settings):
+    code = PuzzleGame(total, given, count, settings)
 
     while True:
         code.display_clues()
