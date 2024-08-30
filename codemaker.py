@@ -2,7 +2,7 @@ import random
 
 class Codemaker:
 
-    colors_full = {'Blue': 34, 'Red': 31, 'Green': 32, 'Yellow': 93, 'Pink': 95, 'Cyan': 36, 'White': 47}
+    colors_full = {'Blue': 34, 'Red': 31, 'Green': 32, 'Yellow': 93, 'Pink': 95, 'Cyan': 36, 'White': 37}
 
     def __init__(self, total, given, settings):
         self.colors = dict(list(self.colors_full.items())[:given])
@@ -53,18 +53,21 @@ class Codemaker:
             print(self.peg_color(color), end="  ")
         print()
 
-    def peg_color(self, text, settings = 0):
-        if settings == 0:
+    def peg_color(self, text, settings = None):
+        if settings == None:
             settings = self.settings
-        
-        text = text[0]
+
+        if len(text) == 1:
+            for color in self.colors_full:
+                if text == color[0]:
+                    text = color
 
         if settings[0] == 0:
-            return text
+            return text[0]
         elif settings[0] == 1:
-            return '\033[' + str(self.colors_full[text]) + 'm' + text + '\033[0m'
+            return '\033[' + str(self.colors_full[text]) + 'm' + text[0] + '\033[0m'
         elif settings[0] == 2:
-            return '\033[30m\033[' + str(self.colors_full[text] + 10) + 'm' + text + '\033[0m'
+            return '\033[30m\033[' + str(self.colors_full[text] + 10) + 'm' + text[0] + '\033[0m'
 
 
 
@@ -97,7 +100,10 @@ class ClassicGame(Codemaker):
     def display_table(self):
         for i in range(self.guesses - 1, -1, -1):
             for peg in self.table[i]:
-                print(self.peg_color(peg), end="  ")
+                if peg == "·":
+                    print(peg, end="  ")
+                else:
+                    print(self.peg_color(peg), end="  ")
             if "·" not in self.table[i]:
                 print(self.marks[i])
             else:

@@ -4,7 +4,7 @@ def options(settings):
     colors = ['Colorless', 'Colored Text', 'Colored Backgrounds']
     color_list = Codemaker.colors_full
     repeat = ['ON', 'OFF']
-    settings_old = settings
+    settings_old = settings.copy()
 
     while True:
         print('1: Peg colors')
@@ -17,30 +17,31 @@ def options(settings):
             print("Current setting: " + colors[settings[0]])
             print("Preview:")
             for color in color_list:
-                print(Codemaker.peg_color(color, settings) + ': ' + color)
+                print(Codemaker.peg_color(Codemaker, color, settings) + ': ' + color)
             print('\nNote that colors may not display properly depending on your system and settings.')
             for i in range(len(colors)):
                 print(str(i + 1) + ': ' + colors[i])
             choice = input('Enter a number to select your option. ')
             if choice.isnumeric and 0 < int(choice) <= len(colors):
-                settings[0] = int(choice)
-                print(colors[int(choice)] + " has been selected.")
+                settings[0] = int(choice) - 1
+                print(colors[int(choice) - 1] + " has been selected.")
             else:
                 print("Invalid choice. Canceling selection.")
 
         elif choice == "2":
-            print("1. " + settings[1][0] + '(Correct position)')
-            print("2. " + settings[1][1] + '(Correct color, incorrect positon)')
-            print("3. " + settings[1][2] + '(Incorrect)')
+            print("1. " + settings[1][0] + ' (Correct position)')
+            print("2. " + settings[1][1] + ' (Correct color, incorrect positon)')
+            print("3. " + settings[1][2] + ' (Incorrect)')
             choice = input('Enter a number to select which symbol to change. ')
             if choice.isnumeric and 0 < int(choice) <= 3:
                 while True:
-                    symbol = input("What symbol would you like to replace " + settings[1][int(choice)] + " with? ")
+                    symbol = input("What symbol would you like to replace " + settings[1][int(choice) - 1] + " with? ")
                     if len(symbol) == 1:
                         string_list = list(settings[1])
-                        string_list[int(choice)] = symbol
+                        string_list[int(choice) - 1] = symbol
                         settings[1] = "".join(string_list)
-                        print(symbol + " has been selected.")
+                        print(symbol + " has been set.")
+                        break
             else:
                 print("Invalid choice. Canceling selection.")
 
@@ -54,10 +55,11 @@ def options(settings):
                 print("Repeat colors has not been changed.")
 
         elif choice == "4":
-            choice = input("Are you sure you would like to reset to default settings? Enter Y to confirm. ")
+            choice = input("Are you sure you would like to reset to default settings? This change cannot be undone.\nEnter Y to confirm. ")
             if choice.upper() == "Y":
                 make_file()
                 settings = get_settings()
+                settings_old = settings.copy()
                 print("Default settings have been restored.")
             else:
                 print("Canceling selection.")
