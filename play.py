@@ -29,6 +29,9 @@ def classic(total, given, settings):
         code.list_colors()
 
         guess = input("Make your guess here: ")
+        if guess == '0':
+            break
+        
         guess = guess_list(code, guess)
 
         if code.check(guess):
@@ -45,6 +48,9 @@ def puzzle(total, given, count, settings):
         code.list_colors()
 
         guess = input("Make your guess here: ")
+        if guess == '0':
+            break
+
         guess = guess_list(code, guess)
 
         if code.compare(guess):
