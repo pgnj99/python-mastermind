@@ -12,6 +12,7 @@ def options(settings):
         print('3: Repeat colors')
         print('4: Restore defaults')
         choice = input('Enter a number to select your option or enter 0 to exit. ')
+        print()
 
         if choice == "1":
             print("Current setting: " + colors[settings[0]])
@@ -24,9 +25,9 @@ def options(settings):
             choice = input('Enter a number to select your option. ')
             if choice.isnumeric and 0 < int(choice) <= len(colors):
                 settings[0] = int(choice) - 1
-                print(colors[int(choice) - 1] + " has been selected.")
+                print(colors[int(choice) - 1] + " has been selected.\n")
             else:
-                print("Invalid choice. Canceling selection.")
+                print("Invalid choice. Canceling selection.\n")
 
         elif choice == "2":
             print("1. " + settings[1][0] + ' (Correct position)')
@@ -40,7 +41,7 @@ def options(settings):
                         string_list = list(settings[1])
                         string_list[int(choice) - 1] = symbol
                         settings[1] = "".join(string_list)
-                        print(symbol + " has been set.")
+                        print(symbol + " has been set.\n")
                         break
             else:
                 print("Invalid choice. Canceling selection.")
@@ -50,9 +51,9 @@ def options(settings):
             choice = input("Change to " + repeat[int(not settings[2])] + "? Enter Y to confirm. ")
             if choice.upper() == "Y":
                 settings[2] = not settings[2]
-                print("Repeat colors is now set to " + repeat[int(settings[2])] + ".")
+                print("Repeat colors is now set to " + repeat[int(settings[2])] + ".\n")
             else:
-                print("Repeat colors has not been changed.")
+                print("Repeat colors has not been changed.\n")
 
         elif choice == "4":
             choice = input("Are you sure you would like to reset to default settings? This change cannot be undone.\nEnter Y to confirm. ")
@@ -60,22 +61,22 @@ def options(settings):
                 make_file()
                 settings = get_settings()
                 settings_old = settings.copy()
-                print("Default settings have been restored.")
+                print("Default settings have been restored.\n")
             else:
-                print("Canceling selection.")
+                print("Canceling selection.\n")
 
         elif choice == "0":
             if settings != settings_old:
                 choice = input("Enter Y to save your settings: ")
                 if choice == "Y":
                     make_file(settings)
-                    print("Changes saved successfully.")
+                    print("Changes saved successfully.\n")
                 else:
                     settings = settings_old
-                    print("Changes canceled.")
+                    print("Changes canceled.\n")
             return settings
         else:
-            print("Invalid choice.")
+            print("Invalid choice.\n")
 
 def make_file(settings = [0, "●◌·", True]):
     file = open("options.txt", "wt", encoding="utf-8")

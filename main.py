@@ -3,11 +3,12 @@ from sys import exit
 from play import *
 from options import *
 
-print('MASTERMIND')
+print('\nMASTERMIND')
 print('1: Classic')
 print('2: Puzzle')
 print('3: Options')
 print('4: Instructions')
+print("\n")
 
 settings = [0, ["●", "◌", "·"], True]
 
@@ -22,6 +23,7 @@ if settings == False:
 # This loop will run for as long as the player wants to continue playing
 while True:
     choice = input('Enter a number to select your mode or enter 0 to exit. ')
+    print()
 
     if choice == "1":
         while True:
@@ -29,15 +31,15 @@ while True:
             if total.isnumeric() and 3 <= int(total) <= 7:
                 break
             else:
-                print('Invalid count.')
+                print('Invalid count.\n')
         while True:
             given = input('How many peg colors would you like to be available? Enter a number between 3 and 7. ')
             if not settings[2] and given < total:
-                print('Repeat colors is turned off, and you cannot have fewer peg colors than pegs (' + total + ').')
+                print('Repeat colors is turned off, and you cannot have fewer peg colors than pegs (' + total + ').\n')
             elif given.isnumeric() and 3 <= int(given) <= 7:
                 break
             else:
-                print('Invalid count.')
+                print('Invalid count.\n')
         while True:
             classic(int(total), int(given), settings)
             replay = input("Enter Y to play a new puzzle. ")
@@ -68,7 +70,6 @@ while True:
         settings = options(settings)
 
     elif choice == "4":
-        print("\n")
         print("INSTRUCTIONS")
         print("Mastermind, also known as Codebreaker, is a tabletop game in which one player (the code maker) makes a 'code', which is a collection of colored pegs, and the second player (the code breaker) must guess the code.\n")
         print("You will play as the code breaker. Each peg color is represented by a letter, and you must enter the full sequence of letter to make your guess. Guess the correct sequence of letters and you win!\n")
@@ -97,7 +98,7 @@ while True:
         print("Enter 0 at any point during gameplay to return to the menu. Have fun!\n")
 
     elif choice == "0":
-        print("Thank you for playing!")
+        print("Thank you for playing!\n")
         break
     else:
-        print("Invalid choice.")
+        print("Invalid choice.\n")

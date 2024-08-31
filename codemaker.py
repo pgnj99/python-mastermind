@@ -56,7 +56,7 @@ class Codemaker:
         print("Available colors: ")
         for color in self.colors:
             print(self.peg_color(color), end="  ")
-        print()
+        print("\n")
 
     def peg_color(self, text, mode = None):
         if mode == None:
@@ -117,7 +117,7 @@ class ClassicGame(Codemaker):
     def display_code(self):
         for peg in self.code:
             print(self.peg_color(peg), end="  ")
-        print()
+        print("\n")
 
 
 class PuzzleGame(Codemaker):
@@ -138,6 +138,7 @@ class PuzzleGame(Codemaker):
             for peg in self.clues[i]:
                 print(self.peg_color(peg), end="  ")
             print(self.marks[i])
+        print()
 
     def compare(self, guess):
         for i in range(len(self.clues)):
