@@ -19,11 +19,17 @@ if not os.path.exists("options.txt"):
     make_file()
 
 # If file exists, settings will be retrieved from contents
-# Program will pre-emptively end if settings file is incorrectly formatted to prevent errors
 settings = get_settings()
+
+# Program cannot be run if file is improperly formatted for gameplay
+# User will be prompted to either restore default settings or exit program
 if settings == False:
-    print("options.txt file is unreadable. Please delete file to continue.")
-    exit(1)
+    restore = input("options.txt file is unreadable. Enter Y to restore default settings, or a different key to exit program: ")
+    if restore == "Y":
+        make_file()
+        settings = get_settings()
+    else:
+        exit(1)
 
 # This loop will run for as long as the player wants to continue playing
 while True:
@@ -58,7 +64,7 @@ while True:
             classic(int(total), int(given), settings)
 
             # Upon game end or exit, player can choose to replay with same settings
-            replay = input("Enter Y to play a new puzzle, or a different character to return to menu. ")
+            replay = input("Enter Y to play a new puzzle, or a different key to return to menu. ")
             print()
             if replay.upper() != 'Y':
                 break
@@ -81,7 +87,7 @@ while True:
                     puzzle(5, 5, 5, settings)
                 
                 # Upon game end or exit, player can choose to replay with same settings
-                replay = input("Enter Y to play a new puzzle, or a different character to return to menu. ")
+                replay = input("Enter Y to play a new puzzle, or a different key to return to menu. ")
                 print()
                 if replay.upper() != 'Y':
                     break

@@ -112,6 +112,11 @@ def get_settings():
 
         settings[0] = int(settings[0])
         settings[2] = bool(int(settings[2]))
+
+        # Ensure color and mark settings do not cause errors during gameplay
+        assert 0 <= settings[0] <= 2
+        assert len(settings[1]) == 3
+        
         return settings
     
     # Function will fail if file does not exist or is not formatted correctly
