@@ -157,9 +157,6 @@ class ClassicGame(Codemaker):
 
 # Class for puzzle game mode
 class PuzzleGame(Codemaker):
-
-    monster_touch = {0: [1, 2, 3], 1: [0, 3, 4], 2: [0, 3, 5], 3: [0, 1, 2, 4, 5, 6], 4: [1, 3, 6], 5: [2, 3, 6], 6: [3, 4, 5]}
-
     def __init__(self, total, given, count, settings):
         # Puzzle game will require list of clues
         super().__init__(total, given, settings)
@@ -177,19 +174,22 @@ class PuzzleGame(Codemaker):
 
     # Display list of clues with marks
     def display_clues(self):
+        # Easy, Medium, and Hard difficulties
         if len(self.code) != 7:
             for i in range(len(self.clues)):
                 for peg in self.clues[i]:
                     print(self.peg_color(peg), end="  ")
                 print(self.marks[i])
             print()
+        
+        # Monster difficulty
         else:
             for clue in self.clues:
+                # Clues will be arranged in hexagonal shape
                 print(" " + self.peg_color(clue[0]) + " " + self.peg_color(clue[1]))
                 print(self.peg_color(clue[2]) + " " + self.peg_color(clue[3]) + " " + self.peg_color(clue[4]))
-                print(" " + self.peg_color(clue[5]) + " " + self.peg_color(clue[6]) + " " + self.marks[self.clues.index(clue)])
+                print(" " + self.peg_color(clue[5]) + " " + self.peg_color(clue[6]) + "  " + self.marks[self.clues.index(clue)])
                 print()
-
 
     # Compare guess with clues
     def compare(self, guess):
@@ -206,24 +206,36 @@ class PuzzleGame(Codemaker):
                 return False
         return True
 
-    
+    # Sub-class to create code
     def make_code(self, total):
         if total != 7:
             return super().make_code(total)
 
+        # Monster difficulty requires separate function due to exclusive no-touch rule
+        # Pegs will be added in special order, requiring pre-made code list
         code = [None] * 7
+
+        # available list contains usable colors, whereas used set contains no longer usable colors
+        # used needs to be set rather than list in order to account for repeated colors
         available = self.colors.copy()
         used = set()
+
+        # Each of three nested lists contains pegs that do not touch each other on a hexagonal grid 
         order = [[3], [0,4,5], [1,2,6]]
 
         # Repeat colors setting will determine whether multiple pegs of the same color can exist in one code
         if self.repeat:
+            # Iterate through one peg group at a time to prevent same-colored pegs from touching
             for group in order:
                 for num in group:
                     code[num] = random.choice(available)
                     used.add(code[num])
+                
+                # With each main loop, colors used in the previous set of pegs will be removed from available list
                 for color in used:
                     available.remove(color)
+
+                # Reset used set to not remove colors already removed
                 used = set()
         else:
             code = random.sample(self.colors, total)

@@ -2,7 +2,9 @@
 
 A Python adaptation of the paper & pencil game codebreaker, also known by the board game adaptation Master Mind. Enter a sequence of characters to guess the secret "code" based on the available marks.
 
-Developed to practice and further explore Python concepts. Utilizes modules, input validation, inheritance, file access, and ANSI color codes.
+Developed to practice and further explore Python concepts. Utilizes modules, input validation, inheritance, polymorphism, file access, and ANSI color codes.
+
+Run main.py to start game.
 
 ## Features
 * A classic-styled game mode in which player can make limited amount of guesses recorded on game board.
@@ -18,4 +20,4 @@ Upon starting the program for the first time, an options.txt file is automatical
 2. Three characters representing mark symbols for correct position (●), incorrect position (◌), and incorrect peg (·), in that order
 3. Integer to toggle repeatable colors (0 - OFF; 1 - ON)
 
-Once automatically created, the options.txt file will be retrieved, allowing settings to persist between program sessions. To prevent errors during gameplay, the program will detect if the file is formatted incorrectly and prompt the user to either restore default settings or exit the program.
+Once automatically created, the options.txt file will be retrieved, allowing settings to persist between program sessions. To prevent errors during gameplay, the program will detect if the file is formatted incorrectly and prompt the user to either restore default settings or exit the program.m.

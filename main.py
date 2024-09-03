@@ -84,6 +84,9 @@ while True:
                 break
             else:
                 choice = input('Invalid choice, try again: ')
+        
+        # Number of colors may randomly change between difficulties
+        # With repeat colors turned off, color counts fewer than peg counts must not be made available
         while True:
             if int(choice) == 1:
                 puzzle(3, random.choice([3,4]), 3, settings)
