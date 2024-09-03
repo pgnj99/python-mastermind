@@ -157,6 +157,9 @@ class ClassicGame(Codemaker):
 
 # Class for puzzle game mode
 class PuzzleGame(Codemaker):
+
+    monster_touch = {0: [1, 2, 3], 1: [0, 3, 4], 2: [0, 3, 5], 3: [0, 1, 2, 4, 5, 6], 4: [1, 3, 6], 5: [2, 3, 6], 6: [3, 4, 5]}
+
     def __init__(self, total, given, count, settings):
         # Puzzle game will require list of clues
         super().__init__(total, given, settings)
@@ -174,11 +177,19 @@ class PuzzleGame(Codemaker):
 
     # Display list of clues with marks
     def display_clues(self):
-        for i in range(len(self.clues)):
-            for peg in self.clues[i]:
-                print(self.peg_color(peg), end="  ")
-            print(self.marks[i])
-        print()
+        if len(self.code) != 7:
+            for i in range(len(self.clues)):
+                for peg in self.clues[i]:
+                    print(self.peg_color(peg), end="  ")
+                print(self.marks[i])
+            print()
+        else:
+            for clue in self.clues:
+                print(" " + self.peg_color(clue[0]) + " " + self.peg_color(clue[1]))
+                print(self.peg_color(clue[2]) + " " + self.peg_color(clue[3]) + " " + self.peg_color(clue[4]))
+                print(" " + self.peg_color(clue[5]) + " " + self.peg_color(clue[6]) + " " + self.marks[self.clues.index(clue)])
+                print()
+
 
     # Compare guess with clues
     def compare(self, guess):
@@ -194,3 +205,26 @@ class PuzzleGame(Codemaker):
                 print("Please try again.")
                 return False
         return True
+
+    
+    def make_code(self, total):
+        if total != 7:
+            return super().make_code(total)
+
+        code = [None] * 7
+        available = self.colors.copy()
+        used = set()
+        order = [[3], [0,4,5], [1,2,6]]
+
+        # Repeat colors setting will determine whether multiple pegs of the same color can exist in one code
+        if self.repeat:
+            for group in order:
+                for num in group:
+                    code[num] = random.choice(available)
+                    used.add(code[num])
+                for color in used:
+                    available.remove(color)
+                used = set()
+        else:
+            code = random.sample(self.colors, total)
+        return code

@@ -55,7 +55,7 @@ def classic(total, given, settings):
         print("You have " + str(chances - guesses) + " guesses remaining.\n")
         code.list_colors()
 
-        guess = input("Make your guess here: ")
+        guess = input("Make your guess here (left to right): ")
         print()
 
         # Player can exit game at any point by entering 0
@@ -90,7 +90,10 @@ def puzzle(total, given, count, settings):
         code.display_clues()
         code.list_colors()
 
-        guess = input("Make your guess here: ")
+        if total != 7:
+            guess = input("Make your guess here (left to right): ")
+        else:
+            guess = input("Make your guess here (left to right, top to bottom): ")
         print()
 
         # Player can exit game at any point by entering 0

@@ -2,6 +2,7 @@
 # Developed in August 2024
 
 import os
+import random
 from sys import exit
 from play import *
 from options import *
@@ -11,7 +12,6 @@ print('\nMASTERMIND\n')
 
 # Settings is used to customize certain aspects of gameplay
 # In order, list elements determine color settings, mark symbols, and repeat colors
-settings = [0, ["●", "◌", "·"], True]
 
 # Settings are stored in file on computer in order to persist between game sessions
 # If file does not exist, it will automatically be created
@@ -45,16 +45,16 @@ while True:
         # User will be able to select number of pegs and colors
         # Input validation is used to check for numeric values
         while True:
-            total = input('How many pegs would you like to use? Enter a number between 3 and 7. ')
+            total = input('How many pegs (3 - 7) would you like to use? ')
             if total.isnumeric() and 3 <= int(total) <= 7:
                 break
             else:
                 print('Invalid count.\n')
         while True:
-            given = input('How many peg colors would you like to be available? Enter a number between 3 and 7. ')
+            given = input('How many peg colors (3 - 7) would you like to be available? ')
 
             # With repeat colors turned off, having more peg colors than pegs will be impossible
-            if not settings[2] and given < total:
+            if given.isnumeric() and not settings[2] and int(given) < int(total):
                 print('Repeat colors is turned off, and you cannot have fewer peg colors than pegs (' + total + ').\n')
             elif given.isnumeric() and 3 <= int(given) <= 7:
                 break
@@ -76,23 +76,35 @@ while True:
         print("1. Easy (3 pegs)")
         print("2. Medium (4 pegs)")
         print("3. Hard (5 pegs)")
+        print("4. Monster (7 pegs, hex shape, matching colors cannot touch)")
+        num = ['3', '4', '5', '7']
         choice = input()
         while True:
-            if choice.isnumeric() and 0 < int(choice) <= 3:
-                if int(choice) == 1:
-                    puzzle(3, 3, 3, settings)
-                elif int(choice) == 2:
-                    puzzle(4, 4, 4, settings)
-                elif int(choice) == 3:
-                    puzzle(5, 5, 5, settings)
-                
-                # Upon game end or exit, player can choose to replay with same settings
-                replay = input("Enter Y to play a new puzzle, or a different key to return to menu. ")
-                print()
-                if replay.upper() != 'Y':
-                    break
+            if choice.isnumeric() and 0 < int(choice) <= 4:
+                break
             else:
                 choice = input('Invalid choice, try again: ')
+        while True:
+            if int(choice) == 1:
+                puzzle(3, random.choice([3,4]), 3, settings)
+            elif int(choice) == 2:
+                puzzle(4, random.choice([4,5]), 4, settings)
+            elif int(choice) == 3:
+                if settings[2]:
+                    puzzle(5, random.choice([4,5]), 5, settings)
+                else:
+                    puzzle(5, 5, 5, settings)
+            elif int(choice) == 4:
+                if settings[2]:
+                    puzzle(7, random.choice([5,6,7]), 6, settings)
+                else:
+                    puzzle(7, 7, 6, settings)
+                
+            # Upon game end or exit, player can choose to replay with same settings
+            replay = input("Enter Y to play a new puzzle, or a different key to return to menu. ")
+            print()
+            if replay.upper() != 'Y':
+                break
 
     # 3: Options
     elif choice == "3":
@@ -116,6 +128,7 @@ while True:
         print("A differently structured take on the original game. There is no more board, and your guesses will not be recorded or marked. Instead, a preset selection of guesses will be laid out to you, each having their own marks. You must guess the code based on these clues.\n")
         print("Your guess will be compared to each clue, and it will fail it conflicts with a clue's marks. The secret to this game? The marks on each clue are the marks your guess should have when compared to each clue.\n")
         print("You're not limited with how many guesses you can make, so guess as many times as you'd like!\n")
+        print("Looking for a vile challenge? Beware the Monster difficulty! Seven pegs are arranged in a hexagonal grid where matching colors cannot touch. This means one color can appear up to three times, and the middle color can only appear once!\n")
         
         print("3: Options")
         print("Configure certain settings related to the game.\n")
